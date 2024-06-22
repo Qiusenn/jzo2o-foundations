@@ -165,8 +165,6 @@ public class ServeItemServiceImpl extends ServiceImpl<ServeItemMapper, ServeItem
             throw new ForbiddenOperationException("启用状态方可禁用");
         }
 
-        //有区域在使用该服务将无法禁用（存在关联的区域服务且状态为上架表示有区域在使用该服务项）
-        //todo
         int count = iServeService.queryServeCountByServerItemAndSaleStatus(id, FoundationStatusEnum.ENABLE.getStatus());
         if (count > 0) {
             throw new ForbiddenOperationException("区域下有上架的服务无法禁用");
