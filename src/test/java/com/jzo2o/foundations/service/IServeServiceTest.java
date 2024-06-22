@@ -1,6 +1,7 @@
 package com.jzo2o.foundations.service;
 
 import com.jzo2o.common.model.PageResult;
+import com.jzo2o.foundations.model.domain.Serve;
 import com.jzo2o.foundations.model.dto.request.ServePageQueryReqDTO;
 import com.jzo2o.foundations.model.dto.response.*;
 import lombok.extern.slf4j.Slf4j;
@@ -15,8 +16,27 @@ import java.util.List;
 @SpringBootTest
 @Slf4j
 class IServeServiceTest {
-//    @Resource
-//    private IServeService serveService;
+    @Resource
+    private IServeService serveService;
+
+    //区域服务查询
+    @Test
+    public void test_queryServeByIdCache(){
+        Serve serve = serveService.queryServeByIdCache(1693815623867506689L);
+        Assert.notNull(serve,"服务为空");
+    }
+
+    //分页测试
+    @Test
+    public void test_page(){
+        ServePageQueryReqDTO servePageQueryReqDTO = new ServePageQueryReqDTO();
+        servePageQueryReqDTO.setRegionId(1686303222843662337L);
+        servePageQueryReqDTO.setPageNo(1L);
+        servePageQueryReqDTO.setPageSize(3L);
+        PageResult<ServeResDTO> page = serveService.page(servePageQueryReqDTO);
+        log.info("page : {}", page);
+        Assert.notEmpty(page.getList(),"列表为空");
+    }
 
 //    @Test
 //    void listServeItemByCityCode() {
@@ -60,15 +80,5 @@ class IServeServiceTest {
 //    }
 
 
-    //分页测试
-//    @Test
-//    public void test_page(){
-//        ServePageQueryReqDTO servePageQueryReqDTO = new ServePageQueryReqDTO();
-//        servePageQueryReqDTO.setRegionId(1677152267410149378L);
-//        servePageQueryReqDTO.setPageNo(1L);
-//        servePageQueryReqDTO.setPageSize(3L);
-//        PageResult<ServeResDTO> page = serveService.page(servePageQueryReqDTO);
-//        log.info("page : {}", page);
-//        Assert.notEmpty(page.getList(),"列表为空");
-//    }
+
 }
