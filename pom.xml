@@ -78,11 +78,6 @@
             <groupId>com.jzo2o</groupId>
             <artifactId>jzo2o-mysql</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>com.jzo2o</groupId>
-            <artifactId>jzo2o-redis</artifactId>
-        </dependency>
 <!--        <dependency>-->
 <!--            <groupId>com.jzo2o</groupId>-->
 <!--            <artifactId>jzo2o-xxl-job</artifactId>-->
