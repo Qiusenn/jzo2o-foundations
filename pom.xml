@@ -82,6 +82,19 @@
 <!--            <groupId>com.jzo2o</groupId>-->
 <!--            <artifactId>jzo2o-xxl-job</artifactId>-->
 <!--        </dependency>-->
+
+        <!-- 使用google的Guava库实现布隆过滤器。 https://mvnrepository.com/artifact/com.google.guava/guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>28.2-jre</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jzo2o</groupId>
+            <artifactId>jzo2o-xxl-job</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

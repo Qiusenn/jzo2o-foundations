@@ -24,4 +24,118 @@
             serve.region_id = #{regionId}
     </select>
 
+    <select id="findServeIconCategoryByRegionId" resultMap="ServeCategoryMap">
+        SELECT
+            type.id as serve_type_id,
+            type.name as serve_type_name,
+            type.serve_type_icon,
+            serve.city_code,
+            serve.id as serve_id,
+            item.id as serve_item_id,
+            item.name as serve_item_name,
+            item.serve_item_icon,
+            item.sort_num as serve_item_sort_num
+        FROM
+            serve
+                inner JOIN serve_item AS item ON item.id = serve.serve_item_id
+                inner JOIN serve_type AS type ON type.id = item.serve_type_id
+        WHERE
+            serve.region_id = #{regionId}
+          AND serve.sale_status = 2
+        ORDER BY
+            type.sort_num,
+            item.sort_num
+    </select>
+    <select id="findServeServeTypeListByRegionId" resultMap="ServeTypeMap">
+        SELECT
+            type.id,
+            type.name,
+            type.sort_num,
+            type.img
+        FROM
+            serve
+                inner JOIN serve_item AS item ON item.id = serve.serve_item_id
+                inner JOIN serve_type AS type ON type.id = item.serve_type_id
+        WHERE
+            serve.region_id = #{regionId}
+          AND serve.sale_status = 2
+        ORDER BY
+            type.sort_num,
+            item.sort_num
+    </select>
+
+    <select id="findHotServeListByRegionId" resultType="com.jzo2o.foundations.model.dto.response.ServeAggregationSimpleResDTO">
+        SELECT
+            serve.city_code,
+            serve.serve_item_id,
+            item.name as serve_item_name,
+            item.unit,
+            item.detail_img,
+            serve.price,
+            item.img as serve_item_img,
+            serve.id as id
+        FROM
+            serve
+                inner JOIN serve_item AS item ON item.id = serve.serve_item_id
+        WHERE
+            serve.region_id = #{regionId}
+          AND serve.sale_status = 2
+          AND serve.is_hot = 1
+        ORDER BY
+            item.sort_num
+    </select>
+    <select id="queryServeDetailByServeId" resultType="com.jzo2o.foundations.model.dto.response.ServeAggregationSimpleResDTO">
+        SELECT
+            serve.city_code,
+            serve.serve_item_id,
+            item.name as serve_item_name,
+            item.unit,
+            item.detail_img,
+            serve.price,
+            item.img as serve_item_img,
+            serve.id as id
+        FROM
+            serve
+                inner JOIN serve_item AS item ON item.id = serve.serve_item_id
+        WHERE
+            serve.id = #{id}
+          AND serve.sale_status = 2
+        ORDER BY
+            item.sort_num
+    </select>
+
+
+    <!--手动的映射-->
+    <resultMap id="ServeCategoryMap" type="com.jzo2o.foundations.model.dto.response.ServeCategoryResDTO">
+        <!--id映射主键字段-->
+        <id column="serve_type_id" property="serveTypeId"></id>
+        <!--result映射普通字段-->
+        <result column="serve_type_name" property="serveTypeName"></result>
+        <result column="serve_type_icon" property="serveTypeIcon"></result>
+        <result column="city_code" property="cityCode"></result>
+
+        <!--column 数据库中的字段名-->
+        <!--property 实体类中对应的属性 该关键字可以省略... -->
+        <!--ofType 是javaType中的单个对象类型-->
+        <collection property="serveResDTOList" ofType="com.jzo2o.foundations.model.dto.response.ServeSimpleResDTO">
+            <id column="serve_id" property="id"></id>
+            <result column="serve_item_id" property="serveItemId"></result>
+            <result column="serve_item_name" property="serveItemName"></result>
+            <result column="serve_item_icon" property="serveItemIcon"></result>
+            <result column="serve_item_sort_num" property="serveItemSortNum"></result>
+        </collection>
+    </resultMap>
+
+    <!--手动的映射-->
+    <resultMap id="ServeTypeMap" type="com.jzo2o.foundations.model.dto.response.ServeAggregationTypeSimpleResDTO">
+        <!--column 数据库中的字段名-->
+        <!--property 实体类中对应的属性 该关键字可以省略... -->
+        <!--id映射主键字段-->
+        <id column="id" property="serveTypeId"></id>
+        <!--result映射普通字段-->
+        <result column="name" property="serveTypeName"></result>
+        <result column="img" property="serveTypeImg"></result>
+        <result column="sort_num" property="serveTypeSortNum"></result>
+    </resultMap>
+
 </mapper>

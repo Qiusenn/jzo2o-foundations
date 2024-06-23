@@ -91,4 +91,11 @@ public interface IServeService extends IService<Serve> {
      */
     int queryServeCountByServeItemIdAndSaleStatus(Long serveItemId, Integer saleStatus);
 
+    /**
+     * 查询区域服务信息并进行缓存
+     * @param id 对应serve表的主键
+     * @return 区域服务信息
+     */
+    Serve queryServeByIdCache(Long id);
+
 }
